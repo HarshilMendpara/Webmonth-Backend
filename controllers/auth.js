@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");        
 const client = require("../configs/database");
+require("dotenv").config();
 
 exports.signUp = (req,res) => {
 
@@ -29,14 +30,12 @@ exports.signUp = (req,res) => {
                     };
                     
                     client.query(`INSERT INTO users (name, email, password) VALUES ('${user.name}', '${user.email}', '${user.password}')`).then((data1) => {
-                        
-                        // console.log(data1);
 
                         const token = jwt.sign(
                             {
                                 email: email
                             },
-                            process.env.SECRET_KEY
+                            ""+process.env.SECRET_KEY
                         );
                         
                         res.status(200).json({
@@ -82,13 +81,13 @@ exports.signIn = (req,res)=>{
                         error: 'server error occured!',
                     });
 
-                }else if(result==true){
+                }else if(result){
 
                     const token = jwt.sign(
                         {
                             email: email
                         },
-                        process.env.SECRET_KEY
+                        ""+process.env.SECRET_KEY
                     );
                     
                     res.status(200).json({
