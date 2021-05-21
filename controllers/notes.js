@@ -15,6 +15,25 @@ exports.addNote = (req, res) => {
     });
 };
 
+exports.editNote = (req,res) => {
+
+   const noteId = req.noteId;
+
+    client.query(`SELECT * FROM notes where noteid = '${noteId}'`).then((data) => {
+
+        const noteData = data.rows[0];
+
+        res.status(200).json({
+            message: "successfull!",
+            data: noteData,
+        });
+    }).catch((err) => {
+        res.status(400).json({
+            error: "Database error occured!",
+        });
+    });
+};
+
 exports.getAllNotes = (req,res) => {
     client.query(`SELECT * FROM notes where email = '${req.email}'`).then((data) => {
         const noteData = data.rows;

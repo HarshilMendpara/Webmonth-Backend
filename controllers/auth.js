@@ -76,7 +76,7 @@ exports.signIn = (req,res)=>{
             bcrypt.compare(password, userData[0].password, (err, result) => {
 
                 if(err){
-
+                    console.log(err);
                     res.status(500).json({
                         error: 'server error occured!',
                     });
