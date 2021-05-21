@@ -15,6 +15,25 @@ exports.addNote = (req, res) => {
     });
 };
 
+exports.userName = (req,res) => {
+
+    const email = req.email;
+ 
+     client.query(`SELECT *FROM users where email = '${email}'`).then((data) => {
+ 
+         const noteData = data.rows[0];
+ 
+         res.status(200).json({
+             message: "successfull!",
+             data: noteData,
+         });
+     }).catch((err) => {
+         res.status(400).json({
+             error: "Database error occured!",
+         });
+     });
+ };
+
 exports.editNote = (req,res) => {
 
    const noteId = req.noteId;
